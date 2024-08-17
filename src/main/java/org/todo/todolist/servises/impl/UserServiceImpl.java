@@ -1,5 +1,6 @@
 package org.todo.todolist.servises.impl;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,9 @@ import org.todo.todolist.repos.UserRepository;
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -20,11 +24,12 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public boolean login(User user , Model model){
+    public boolean login(User user, HttpSession session) {
         User userDB = userRepository.findByUsername(user.getUsername());
-        if(passwordEncoder.matches(user.getPassword(), userDB.getPassword())){
-            model.addAttribute("username", user.getUsername());
-            model.addAttribute("id", user.getId());
+        if (passwordEncoder.matches(user.getPassword(), userDB.getPassword())) {
+
+            session.setAttribute("username", userDB.getUsername());
+            session.setAttribute("id", userDB.getId());
             return true;
         }
         return false;
@@ -32,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean register(User user) {
-        if(userRepository.findByUsername(user.getUsername()) == null){
+        if (userRepository.findByUsername(user.getUsername()) == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             return true;

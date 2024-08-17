@@ -15,9 +15,24 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String task;
+    private String title;
     private String description;
-    private String status;
+    private String status = "Scheduled";
     private Date date;
     private int userId;
+
+    public Task(String title, String description, Date date, int userId) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.userId = userId;
+    }
+    public Task(String title, String description, Date date) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+    }
+
+    public Task() {
+    }
 }

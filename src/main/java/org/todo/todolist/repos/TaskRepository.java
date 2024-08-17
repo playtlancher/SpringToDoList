@@ -5,4 +5,6 @@ import org.todo.todolist.models.Task;
 
 public interface TaskRepository extends CrudRepository<Task, Long> {
     Iterable<Task> findAllByUserId(int id);
+
+    Iterable<Task> findAllById(int id);
 }

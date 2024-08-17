@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/fonts/iconic/css/material-design-iconic-font.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/vendor/daterangepicker/daterangepicker.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/css/util.css">
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
+
+  <!--===============================================================================================-->
+
+  <title>Task page</title>
+</head>
+<body>
+<div class="right">
+  <button onclick="back()">Back</button>
+</div>
+<div id="task-page" class="grid-container fade-in">
+  <div></div>
+  <div th:each="el: ${task}">
+    <header class="content-center justify-content-center align-content-center m-t-20">
+      <h1 th:text="${session.get('username') + 's To Do List'}"></h1>
+    </header>
+    <form id="task-form" class="wrap" method="post" >
+      <div class="wrap-input100">
+        <input id="header-input" name="title" class="input100" th:value="${task.getTitle()}">
+        <span class="focus-input100" data-placeholder="Header"></span>
+      </div>
+      <div class="wrap-input100">
+        <input id="text-input" name="description" class="input100" th:value="${task.getDescription()}">
+        <span class="focus-input100" data-placeholder="Description"></span>
+      </div>
+      <div class="wrap-input100">
+        <input id="deadline" name="date" class="input100" type="date" th:value="${task.getDate()}"
+               min="2024-01-01" max="9999-12-31">
+        <span class="focus-input100"></span>
+      </div>
+      <div class="container-login100-form-btn">
+        <div class="wrap-login100-form-btn">
+          <div class="login100-form-bgbtn"></div>
+          <button id="add-button" class="login100-form-btn">
+            Update task
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/bootstrap/js/popper.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--==============================================================================================-->
+<script src="/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/daterangepicker/moment.min.js"></script>
+<script src="/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="/js/login.js"></script>
+<script>
+  function back() {
+    window.location.href = '/task';
+  }
+</script>
+</body>
+</html>

@@ -38,11 +38,11 @@
     <div></div>
     <div>
         <header class="content-center m-t-20">
-            <h1 th:text="${username + 's ToDoList'}"></h1>
+            <h1 th:text="${session.get('username') + 's To Do List'}"></h1>
         </header>
-        <form id="task-form" class="wrap" method="post">
+        <form th:action="@{/task/add}" id="task-form" class="wrap" method="post">
             <div class="wrap-input100">
-                <input id="header-input" name="task" class="input100">
+                <input id="header-input" name="title" class="input100">
                 <span class="focus-input100" data-placeholder="Header"></span>
             </div>
             <div class="wrap-input100">
@@ -50,7 +50,8 @@
                 <span class="focus-input100" data-placeholder="Description"></span>
             </div>
             <div class="wrap-input100">
-                <input id="deadline" name="date" class="input100" type="date">
+                <input id="deadline" name="date" class="input100" type="date"
+                       min="2024-01-01" max="9999-12-31">
                 <span class="focus-input100"></span>
             </div>
             <div class="container-login100-form-btn">
@@ -65,13 +66,9 @@
 
         <ul class="colum-center flex-end wrap m-t-10 fade-in" id="task-list" th:each="task: ${tasks}">
             <li class="fade-in" style="display: flex;">
-                <span class="header" th:text="${task.getTask()}"/>
-                <span style="display: none" , class="date"></span>
-                <span style="display: none" , class="description"></span>
-                <span style="display: none" . class="status"></span>
-                <button class="delete-button">delete</button>
-                <button class="edit edit-button">edit</button>
-                <input type="checkbox" class="checkbox"></li>
+                <span class="header" th:text="${task.getTitle()}"/>
+                <button class="delete-button"><a style="text-decoration: none ; color: inherit" th:href="'/task/' + ${task.getId()}">Details</a></button>
+                <input type="checkbox" onchange="check(this.parentElement)" class="checkbox"></li>
         </ul>
         <ul id="pagination-container" class="content-center fade-in">
 
@@ -93,8 +90,18 @@
 <script src="/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 <script src="/js/login.js"></script>
-<script type="module" src="/js/main.js"></script>
-
-
+<script>
+    function check(liElement) {
+        let checkbox = liElement.querySelector(".checkbox");
+        let header = liElement.querySelector(".header");
+        if (checkbox.checked) {
+            header.classList.add("strikethrough-animation");
+            liElement.classList.add("done");
+        } else {
+            header.classList.remove("strikethrough-animation");
+            liElement.classList.remove("done");
+        }
+    }
+</script>
 </body>
 </html>

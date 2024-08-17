@@ -21,12 +21,13 @@ public class RegistrationController {
     public String registration(Model model) {
         return "registration";
     }
+
     @PostMapping("/registration")
     public String registrationPost(@RequestParam String username, @RequestParam String password, @RequestParam String email, Model model) {
         UserService userService = new UserServiceImpl(userRepository);
         User user = new User(username, password, email);
-        if (userService.register(user)){
-            return "login";
+        if (userService.register(user)) {
+            return "redirect:/login";
         }
         model.addAttribute("error", "Username or password is incorrect");
         return "registration";

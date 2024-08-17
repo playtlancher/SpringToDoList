@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 
     <meta charset="UTF-8"/>
@@ -116,7 +116,7 @@
     const errorMessage = document.getElementById('error-message');
     const modelErrorMessage = document.getElementById('model-error-message');
 
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function (event) {
         if (password.value !== confirmPassword.value) {
             errorMessage.style.display = 'flex';
             modelErrorMessage.style.display = "none"
@@ -128,5 +128,4 @@
 </script>
 
 </body>
-</html>
 </html>

@@ -1,5 +1,6 @@
 package org.todo.todolist.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,17 +17,17 @@ public class LoginController {
     @Autowired
     UserRepository userRepository;
 
-
     @GetMapping("/login")
     public String login(Model model) {
         return "login";
     }
+
     @PostMapping("/login")
-    public String loginPost(@RequestParam String username, @RequestParam String password, Model model) {
+    public String loginPost(HttpSession session, @RequestParam String username, @RequestParam String password, Model model) {
         UserService userService = new UserServiceImpl(userRepository);
         User user = new User(username, password);
-        if (userService.login(user,model)){
-            return "task";
+        if (userService.login(user, session)) {
+            return "redirect:/task";
         }
         return "login";
     }
